@@ -1,4 +1,4 @@
 /migrations
-/.venv
+/venv
 /__pycache__
 /resources/__pycache__

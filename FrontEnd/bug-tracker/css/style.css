@@ -1,0 +1,149 @@
+.login-card{
+    width:40rem;
+    height: 30rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 45px;
+    background-color: rgb(153, 184, 184);
+    margin: auto;
+    padding: 30px;
+    box-shadow: rgb(116, 11, 187) 45px 35px 60 px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+}
+
+.error_username{
+    color:red;
+    display:none
+}
+
+   /* Remove the navbar's default margin-bottom and rounded borders */ 
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+.test{
+    background-color: red;;
+}
+  
+  /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+    height: 450px
+}
+  
+  /* Set gray background color and 100% height */
+.sidenav {
+    padding-top: 20px;
+    background-color: #f1f1f1;
+    color:#fff;
+    height: 100%;
+}
+.side-bar-left  {
+    padding-top: 20px;
+    background-color: #f5f5f7;
+    color:#19202b;
+    position:relative;
+    height: 100%;
+    margin-bottom: 0%;
+}
+  /* Set black background color, white text and some padding */
+footer {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    padding: 15px;
+}
+.sidebar{
+    background-color: #EFF5F5;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    list-style: none;
+    gap:1rem;
+    color: black;
+}
+.col-sm-3{
+    background-color: #EFF5F5;
+    height:1200px
+}
+#searchbox{
+	position: fixed;right: 0px;
+  top: 3px;
+  margin-left: 30rem;
+  color:red;
+}
+.navbar{
+    background-color: #121d2e;
+    margin: 0;
+}
+.navbar-brand{
+    color: #fff;
+    background-color: black;
+}
+  /* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+    .sidenav {
+      height: auto;
+      padding: 15px;
+    }
+    .row.content {
+        height:auto;
+    } 
+  }
+  .dashboard{
+    display: flex;
+    flex-direction: row;
+  }
+  .main-container{
+    display:flex;
+    justify-content: space-evenly;
+    margin-top: 25px;
+  }
+  .main-container-2{
+    display:flex;
+    justify-content: space-evenly;
+    margin-top: 15px;
+  }
+  .dash-card{
+    width:20rem;
+    height: 15rem;
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 2px 2px 2px 2px #888888;
+display: grid;
+    grid-template-columns: auto auto;
+  }
+  .dash-card-1{
+background-color: #17a2b8;
+  }
+  .dash-card-2{
+    background-color: #ffc107;
+      }
+      .dash-card-3{
+        background-color: #17a2b8;
+          }
+          .dash-card-4{
+            background-color: #ffc107;
+              }
+              .dash-card-5{
+                background-color: #dc3545;
+                  }
+                  .dash-card-6{
+                    background-color: #dc3545;
+                      }
+.fa-icon{
+    float:right;
+    opacity:0.4;
+    color: #f1f1f1;
+
+}
+.register{
+    margin-left: 30rem;
+    width:30rem;
+}
+.table{
+  margin-left: 20rem;
+  margin-top: 1rem;
+  width:80rem;
+}

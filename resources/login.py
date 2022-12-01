@@ -8,9 +8,9 @@ import bcrypt
 class Login(Resource):
     def post(self):
         data = request.get_json(force=True)
-        email = data['email']
+        user_name = data['user_name']
         password = data['password']
-        user = Users.query.filter_by(email = email).limit(1).all()
+        user = Users.query.filter_by(user_name = user_name).limit(1).all()
         if not user:
             abort(401)
         user_data = {}
@@ -23,5 +23,6 @@ class Login(Resource):
             })
         token = generate_jwt_token(user_data)
         return jsonify({
-            "token": token
+            "token": token,
+            "user_data":user_data
         })

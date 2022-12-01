@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BugTracker</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+  <div class="container" id = "container">
+    <div class="row">
+   <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+   <a class="navbar-brand" href="#">Logo</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+     <span class="navbar-toggler-icon"></span>
+   </button>
+ 
+   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+     
+     <form class="form-inline my-2 my-lg-0">
+   
+       <!-- <input class="form-control mr-sm-2" type="search"  placeholder="Search Employee" aria-label="Search"> -->
+       <botton class = 'btn btn-primary mr-sm-2' id = "searchbox"><i class = 'fa fa-signout'></i> Sign Out</botton>       
+
+     </form>
+   </div>
+ </nav>
+ </div>
+ 
+ <!--Main Bo starts here -->
+ <div class="row" id="row">
+     <div class="col-sm-3" >
+  <div class="sidebar">
+<div class ='admin_menu'>
+   <a class="active" href="home.html"><li class = "">DashBord</i></a>
+   <a href="user.html"><li class = "">Register User</i></a>
+   <a href="issues.html" ><li class = "">Register Issues</i></a>
+   <a href="#"><li class = "">Another \Menu</i></a>
+    </div>
+    <div class ='staff_menu'>
+      <a class="active" href="home.html"><li class = "">DashBord</i></a>
+      <a href="user.html"><li class = "">My Tasks</i></a>
+      <a href="issues.html" ><li class = "">UnResolved Tasks</i></a>
+      <a href="#"><li class = "">Un Assigned Tasks</i></a>
+       </div>
+ </div>
+ 
+     </div>
+     
+     <!---- admin dashboard-->
+     <div class = 'admin_dashboard_cards'>
+     <div class = 'row main-container'>
+        <div class="col-sm dash-card dash-card-1">
+          Active Staff
+          <i class="fa-icon fa fa-users" style="font-size:48px;"></i>
+          <h3 id = 'no_of_staff'></h3>
+        </div>
+        <div class="col-sm dash-card  dash-card-2">
+          Unassigned Staff
+          <i class="fa-icon fa fa-users" style="font-size:48px;"></i>
+         
+        </div>
+        <div class="col-sm dash-card  dash-card-3">
+          Total Tasks
+          <i class="fa-icon fa fa-bars"  style="font-size:48px;"></i>
+          <h3 id = 'no_of_task'></h3>
+         
+        </div>
+     </div>
+     <div class = 'row main-container-2'>
+      <div class="col-sm dash-card  dash-card-4">
+       Total Resolved Tasks
+        <i class="fa-icon fa fa-bars"  style="font-size:48px;"></i>
+      </div>
+      <div class="col-sm dash-card  dash-card-5">
+        Urgent Tasks
+        <i class="fa-icon fa fa-bars"  style="font-size:48px;"></i>
+      </div>
+      <div class="col-sm dash-card  dash-card-6">
+       Total UnResolved Tasks
+        <i class="fa-icon fa fa-bars"  style="font-size:48px;"></i>
+       
+      </div>
+   </div>
+</div>
+
+     <!---- staff dashboard-->
+     <div class = 'staff_dashboard_cards'>
+      <div class = 'row main-container'>
+         <div class="col-sm dash-card dash-card-1">
+           My Unresolved Tasks
+           <i class="fa-icon fa fa-users" style="font-size:48px;"></i>
+           <h3 id = 'no_of_staff'></h3>
+         </div>
+         <div class="col-sm dash-card  dash-card-2">
+           My Completed Tasks
+           <i class="fa-icon fa fa-users" style="font-size:48px;"></i>
+          
+         </div>
+         <div class="col-sm dash-card  dash-card-3">
+           All Tasks
+           <i class="fa-icon fa fa-bars"  style="font-size:48px;"></i>
+           <h3 id = 'no_of_task'></h3>
+          
+         </div>
+      </div>
+    
+ </div>
+
+
+</div>
+
+</div>
+
+  </div>
+ 
+ 
+  <script src="tools/js/api.js"></script>
+<script>
+  $(document).ready(function(){
+    
+let token_d = JSON.parse(localStorage.getItem('BugTracker'))
+if(!token_d){
+  window.location.href = "index.html";
+}
+let token = token_d['token']
+let user_role = token_d['user_data']['role']
+if(user_role =='admin'){
+  $('.staff_menu').hide()
+  $('.staff_dashboard_cards').hide()
+}else{
+  $('.admin_menu').hide()
+  $('.admin_dashboard_cards').hide()
+}
+console.log(token)
+  $.ajax({
+  "url": `${BASE_URL}users/`,
+  "method": "GET",
+  "timeout": 0,
+  "headers": {
+    "Authorization": `Bearer ${token}`
+  },
+    success: function(response){
+          console.log(response)   
+          $('#no_of_staff').text(response.length)
+    }, 
+    error: function(){
+
+    }
+})
+
+$.ajax({
+  "url": `${BASE_URL}issues/`,
+  "method": "GET",
+  "timeout": 0,
+  "headers": {
+    "Authorization": `Bearer ${token}`
+  },
+    success: function(response){
+          console.log(response)   
+          let issues = response? response.length  :0
+          $('#no_of_task').text(issues)
+    }, 
+    error: function(){
+
+    }
+})
+})
+</script>
+  
+
+</body>
+</html>

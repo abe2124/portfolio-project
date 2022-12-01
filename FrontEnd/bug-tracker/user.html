@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>BugTracker</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+  <div class="container" id = "container">
+    <div class="row">
+   <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+   <a class="navbar-brand" href="#">Logo</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+     <span class="navbar-toggler-icon"></span>
+   </button>
+ 
+   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+     
+     <form class="form-inline my-2 my-lg-0">
+   
+       <!-- <input class="form-control mr-sm-2" type="search" id = "searchbox" placeholder="Search Employee" aria-label="Search"> -->
+      <botton class = 'btn btn-primary mr-sm-2' id = "searchbox"><i class = 'fa fa-signout'></i> Sign Out</botton>       
+
+     </form>
+   </div>
+ </nav>
+ </div>
+ 
+ <!--Main Bo starts here -->
+ <div class="row" id="row">
+  <div class="col-sm-3" >
+<div class="sidebar">
+<a class="active" href="home.html"><li class = "">DashBord</i></a>
+<a href="user.html"><li class = "">Register User</i></a>
+<a href="issues.html" ><li class = "">Register Issues</i></a>
+<a href="#"><li class = "">Another \Menu</i></a>
+</div>
+ 
+     </div>
+     
+     <div class = 'row main-container'>
+        <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Full Name</label>
+              <input type="email" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Nik Name</label>
+              <input type="text" class="form-control" id="nikname" placeholder="Password">
+            </div>
+        
+          </form>
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email </label>
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Address</label>
+              <input type="text" class="form-control" id="address" placeholder="Password">
+            </div>
+          </form>
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Position </label>
+              <input type="email" class="form-control" id="position" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Role</label>
+              <input type="text" class="form-control" id="role" placeholder="Password">
+            </div>
+          </form>
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Username </label>
+              <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Paasword</label>
+              <input type="password" class="form-control" id="password" placeholder="Password">
+            </div>
+          </form>
+     </div>
+   
+<button class = "register btn btn-primary">Register</button>
+
+<div class = 'table row main-container'>
+  <table class="table" id = 'user_list'>
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Full Name</th>
+        <th scope="col">Role</th>
+        <th scope="col">Address</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+ 
+    
+    </tbody>
+  </table>
+</div>
+</div>
+
+</div>
+
+  </div>
+ 
+ 
+
+  
+  <script src="tools/js/api.js"></script>
+<script>
+  function deleteUser(id){
+    let token_d = JSON.parse(localStorage.getItem('BugTracker'))
+    if(!token_d){
+  window.location.href = "index.html";
+}
+let token = token_d['token']
+    if(confirm("are you sure?")){
+    $.ajax({
+  "url": `${BASE_URL}users/${id}/`,
+  "method": "DELETE",
+  "timeout": 0,
+  "headers": {
+    "Authorization": `Bearer ${token}`
+  },
+    success: function(response){
+      location.reload()
+    },
+    error: function(error){}
+})
+  }
+  }
+  $(document).ready(function(){
+    
+let token_d = JSON.parse(localStorage.getItem('BugTracker'))
+let token = token_d['token']
+console.log(token)
+  $.ajax({
+  "url": `${BASE_URL}users/`,
+  "method": "GET",
+  "timeout": 0,
+  "headers": {
+    "Authorization": `Bearer ${token}`
+  },
+    success: function(response){
+let content = ''
+let i =0
+response.forEach(element => {
+  i++
+  content += `<tr>
+    <td>${i}</td>
+    <td>${element.full_name}</td>
+    <td>${element.role}</td>
+    <td>${element.address}</td>
+    <td>
+      <button class ="delete-user" onclick="deleteUser(${element.id})">
+        <i class="fa-icon fa fa-trash" style="color:red;"></i>
+      </button>
+      </td>
+            </tr>`
+});
+$('#user_list tbody').html(content)
+    }, 
+    error: function(){
+
+    }
+})
+$('.register').on('click', function(){
+  let name = $('#name').val()
+  let email = $('#email').val()
+  let position = $('#position').val()
+  let username = $('#username').val()
+  let password = $('#password').val()
+  let nikname = $('#nikname').val()
+  let address = $('#address').val()
+  let role = $('#role').val()
+
+  let token_d = JSON.parse(localStorage.getItem('BugTracker'))
+let token = token_d['token']
+let data = JSON.stringify({
+  
+"full_name" : name,
+"nik_name" : nikname,
+"email" : email,
+"address": address,
+"position": position,
+"role": role,
+"user_name": username,
+"password": password
+})
+    $.ajax({
+  "url": `${BASE_URL}users/`,
+  "method": "POST",
+  "timeout": 0,
+  "data":data,
+  "headers": {
+    "Authorization": `Bearer ${token}`
+  },
+    success: function(response){
+      alert("user registered")
+      location.reload()
+    },
+    error: function(error){}
+})
+
+
+})
+
+  })
+</script>
+
+</body>
+</html>

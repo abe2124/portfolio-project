@@ -26,6 +26,7 @@ class User(Resource):
         return jsonify({"message":"user added","code":201})
     @admin_login_required
     def get(self, payload):
+        print(payload)
         data = Users.query.all()
         users = []
         for d in data:
