@@ -51,8 +51,8 @@ class User(Resource):
     def delete(self):
         return "delete test"
 class UserList(Resource):
-    @login_required
-    def get(self, id, payload):
+    @admin_login_required
+    def get(self, payload, id, **kwargs):
         d = Users.query.get(id)
         user = []
         user.append({
@@ -71,7 +71,7 @@ class UserList(Resource):
             })
         return jsonify(user)
     @admin_login_required
-    def put(self, id, payload):
+    def put(self, payload, id, **kwargs):
         data = request.get_json(force=True)
         user = Users.query.get(id)
         user.full_name = data['full_name']
@@ -88,6 +88,8 @@ class UserList(Resource):
         db.session.commit()
         return jsonify({"message":"user updated","code":200})
     @admin_login_required
-    def delete(self, id, payload):
+    def delete(self, payload, id, **kwargs):
         Users.query.filter_by(id=id).delete()
+        db.session.commit()
+
         return jsonify({"message":"User Deleted","code":200})

@@ -36,6 +36,7 @@ class CommentList(Resource):
     def put(self, id):
         comments = Comments.query.get(id)
         data = request.get_json(force=True)
+        print(data)
         comments.user_id = data['user_id']
         comments.issue_id = data['issue_id']
         comments.content = data['content']

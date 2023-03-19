@@ -62,12 +62,12 @@ class IssuesList(Resource):
     def put(self, id):
         issue = Issues.query.get(id)
         data = request.get_json(force=True)
-        # issue.name = data['name']
-        # issue.descriprion = data['descriprion']
-        # issue.category = data['category']
-        # issue.priority = data['priority']
+        issue.name = data['name']
+        issue.descriprion = data['descriprion']
+        issue.category = data['category']
+        issue.priority = data['priority']
         issue.assignee = data['assignee']
-        # issue.due_date = data['due_date']
+        issue.due_date = data['due_date']
         if len(data['assignee'])>0:
             issue.assigned_date =  time.time()
         if len(data['assignee'])>0:
@@ -77,4 +77,6 @@ class IssuesList(Resource):
         return jsonify({"message":"issue updated","code":200})
     def delete(self,id):
         Issues.query.filter_by(id=id).delete()
+        db.session.commit()
+
         return jsonify({"message":"success","code":200})
